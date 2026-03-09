@@ -65,15 +65,8 @@ export default function EmbeddedPlayer({
   autoplay = false,
   defaultMuted = false,
 }) {
-  const {
-    station,
-    recognition,
-    onAir,
-    loading,
-    error,
-    socketState,
-    refreshRecognition,
-  } = useWaxStation(stationName);
+  const { station, recognition, onAir, loading, error, refreshRecognition } =
+    useWaxStation(stationName);
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(defaultMuted);
@@ -313,10 +306,6 @@ export default function EmbeddedPlayer({
               aria-label="Volume"
             />
           </label>
-
-          <div className="socket-indicator" title={`Socket: ${socketState}`}>
-            {socketState}
-          </div>
         </div>
 
         {audioError ? <p className="error-banner">{audioError}</p> : null}

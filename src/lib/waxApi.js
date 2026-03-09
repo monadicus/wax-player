@@ -1,10 +1,38 @@
 export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.wax.live";
 export const STREAM_BASE_URL =
   import.meta.env.VITE_STREAM_URL || "https://wax.live";
-export const API_WS_BASE_URL = API_BASE_URL.replace(/^http/, "ws");
+
+function buildProxyUrl(endpoint) {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  return (
+    new URL("./wax-proxy.php", document.baseURI).toString() +
+    "?path=" +
+    encodeURIComponent(endpoint)
+  );
+}
 
 async function request(endpoint) {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`);
+  let response;
+  const proxyUrl = buildProxyUrl(endpoint);
+
+  if (!import.meta.env.DEV && proxyUrl) {
+    try {
+      response = await fetch(proxyUrl, {
+        credentials: "same-origin",
+      });
+      if (response.status === 404 || response.status === 405) {
+        throw new Error("proxy-unavailable");
+      }
+    } catch {
+      response = await fetch(`${API_BASE_URL}${endpoint}`);
+    }
+  } else {
+    response = await fetch(`${API_BASE_URL}${endpoint}`);
+  }
+
   const payload = await response
     .json()
     .catch(() => ({ message: "Invalid API response." }));
@@ -24,30 +52,6 @@ export function buildStationArtworkUrl(stationName) {
 
 export function buildStreamUrl(mountpoint) {
   return `${STREAM_BASE_URL}/stream/${encodeURIComponent(mountpoint)}`;
-}
-
-export function openStationSocket(mountpoint) {
-  return new WebSocket(
-    `${API_WS_BASE_URL}/ws/public/${encodeURIComponent(mountpoint)}`,
-  );
-}
-
-export function mapLatestSongMessage(message) {
-  return {
-    id:
-      message.recognition_id === null || message.recognition_id === undefined
-        ? null
-        : Number(message.recognition_id),
-    artist: message.artist || "",
-    album: message.album || null,
-    album_id:
-      message.album_id === null || message.album_id === undefined
-        ? null
-        : Number(message.album_id),
-    song: message.song || "",
-    cover_art_url: message.cover_art_url || null,
-    created_at: message.created_at || null,
-  };
 }
 
 export async function fetchStation(stationName) {

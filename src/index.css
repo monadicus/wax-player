@@ -90,7 +90,6 @@ a {
 .setup-copy code,
 .track-meta,
 .status-group a,
-.socket-indicator,
 .eyebrow {
   font-family: "IBM Plex Mono", monospace;
 }
@@ -230,7 +229,7 @@ a {
   align-items: center;
   display: grid;
   gap: 10px;
-  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  grid-template-columns: auto auto minmax(0, 1fr);
 }
 
 .play-button,
@@ -286,14 +285,6 @@ a {
 .volume-control input {
   accent-color: #fb923c;
   width: 100%;
-}
-
-.socket-indicator {
-  color: rgba(255, 237, 213, 0.56);
-  font-size: 0.64rem;
-  justify-self: end;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .error-banner {
@@ -358,9 +349,5 @@ a {
 
   .player-controls {
     grid-template-columns: auto auto minmax(0, 1fr);
-  }
-
-  .socket-indicator {
-    display: none;
   }
 }

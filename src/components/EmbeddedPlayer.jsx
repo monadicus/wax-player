@@ -213,7 +213,6 @@ export default function EmbeddedPlayer({
       <div className="player-content">
         <div className="player-header">
           <div>
-            <p className="eyebrow">WaxLive embed</p>
             <h1>{stationTitle}</h1>
           </div>
 

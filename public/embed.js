@@ -127,7 +127,7 @@
       '<img class="art" alt="Station artwork">' +
       '<div class="content">' +
       '<div class="header">' +
-      '<div><p class="eyebrow">WaxLive embed</p><h2 class="title">Loading station...</h2></div>' +
+      '<div><h2 class="title">Loading station...</h2></div>' +
       '<div class="status"><span class="dot"></span><span class="status-text">Loading</span></div>' +
       "</div>" +
       '<div class="track"><p class="track-title">Connecting...</p><p class="meta">Checking station status.</p></div>' +

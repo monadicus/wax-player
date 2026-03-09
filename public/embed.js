@@ -2,7 +2,7 @@
   const API_BASE_URL = "https://api.wax.live";
   const STREAM_BASE_URL = "https://wax.live";
   const FALLBACK_ART =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2318181b'/%3E%3Cstop offset='1' stop-color='%23ea580c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='320' rx='36' fill='url(%23g)'/%3E%3Ccircle cx='160' cy='160' r='88' fill='rgba(255,255,255,0.12)'/%3E%3Ccircle cx='160' cy='160' r='22' fill='%23fff7ed'/%3E%3C/svg%3E";
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23050505'/%3E%3Cstop offset='1' stop-color='%23373737'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='320' rx='36' fill='url(%23g)'/%3E%3Ccircle cx='160' cy='160' r='88' fill='rgba(255,255,255,0.12)'/%3E%3Ccircle cx='160' cy='160' r='22' fill='%23ffffff'/%3E%3C/svg%3E";
   const POLL_INTERVAL_MS = 15000;
 
   function normalizeStationName(value) {
@@ -26,16 +26,6 @@
     if (!source) return fallback;
     if (/^\d+$/.test(source)) return source + "px";
     return source;
-  }
-
-  function formatUpdatedAt(value) {
-    if (!value) return "";
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "";
-    return new Intl.DateTimeFormat(undefined, {
-      hour: "numeric",
-      minute: "2-digit",
-    }).format(date);
   }
 
   function buildProxyUrl(script, endpoint) {
@@ -94,30 +84,30 @@
       ';}' +
       '.wax-player{box-sizing:border-box;display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;width:100%;min-height:' +
       height +
-      ';padding:14px;border-radius:24px;border:1px solid rgba(254,215,170,.18);background:linear-gradient(135deg,rgba(23,23,23,.96),rgba(41,37,36,.92)),linear-gradient(180deg,rgba(249,115,22,.14),transparent 55%);box-shadow:0 18px 32px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(18px);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fef2e8;}' +
+      ';padding:14px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(8,8,8,.98),rgba(26,26,26,.94));box-shadow:0 18px 32px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(18px);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#ffffff;}' +
       '.wax-player *{box-sizing:border-box;}' +
       '.art{width:72px;height:72px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 10px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);background:#1c1917;}' +
       '.content{display:grid;gap:12px;min-width:0;}' +
       '.header{display:flex;justify-content:space-between;align-items:start;gap:10px;}' +
       '.eyebrow,.meta,.link,.status,.button,.hint{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;}' +
-      '.eyebrow{margin:0 0 6px;color:#fdba74;font-size:10px;letter-spacing:.12em;text-transform:uppercase;}' +
+      '.eyebrow{margin:0 0 6px;color:#d4d4d4;font-size:10px;letter-spacing:.12em;text-transform:uppercase;}' +
       '.title{margin:0;font-size:20px;line-height:1.05;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
-      '.status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,237,213,.12);background:rgba(255,247,237,.08);color:rgba(255,237,213,.76);font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}' +
-      '.status.live{background:rgba(249,115,22,.16);border-color:rgba(251,146,60,.24);color:#fff7ed;}' +
+      '.status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}' +
+      '.status.live{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);color:#ffffff;}' +
       '.dot{display:block;width:8px;height:8px;border-radius:999px;background:currentColor;}' +
       '.status.live .dot{animation:waxPulse 1.6s ease-in-out infinite;}' +
       '.track{display:grid;gap:4px;min-height:40px;}' +
       '.track-title{margin:0;font-size:16px;line-height:1.15;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
-      '.meta{margin:0;color:rgba(255,237,213,.72);font-size:11px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+      '.meta{margin:0;color:rgba(255,255,255,.68);font-size:11px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
       '.controls{display:flex;align-items:center;gap:10px;}' +
-      '.button{appearance:none;border:1px solid rgba(255,237,213,.14);border-radius:16px;background:rgba(255,247,237,.08);color:#fff7ed;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s ease,background .12s ease,border-color .12s ease;}' +
-      '.button:hover{transform:translateY(-1px);background:rgba(255,247,237,.14);border-color:rgba(255,237,213,.24);}' +
+      '.button{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.06);color:#ffffff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s ease,background .12s ease,border-color .12s ease;}' +
+      '.button:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);}' +
       '.button:disabled{cursor:not-allowed;opacity:.45;transform:none;}' +
-      '.button.primary{background:linear-gradient(135deg,rgba(251,146,60,.94),rgba(249,115,22,.86));color:#1c1917;border-color:rgba(255,237,213,.2);}' +
-      '.button.primary:hover{background:linear-gradient(135deg,rgba(253,186,116,.98),rgba(249,115,22,.92));}' +
-      '.link{color:rgba(255,237,213,.84);font-size:11px;text-decoration:none;}' +
-      '.link:hover{color:#fff7ed;}' +
-      '.hint{color:#fecaca;background:rgba(127,29,29,.26);border:1px solid rgba(248,113,113,.18);border-radius:12px;padding:8px 10px;font-size:11px;line-height:1.4;display:none;}' +
+      '.button.primary{background:#ffffff;color:#050505;border-color:rgba(255,255,255,.32);}' +
+      '.button.primary:hover{background:#e5e5e5;}' +
+      '.link{color:rgba(255,255,255,.82);font-size:11px;text-decoration:none;}' +
+      '.link:hover{color:#ffffff;}' +
+      '.hint{color:#f5f5f5;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;font-size:11px;line-height:1.4;display:none;}' +
       '.hint.visible{display:block;}' +
       '@keyframes waxPulse{0%,100%{opacity:.45;transform:scale(.9);}50%{opacity:1;transform:scale(1);}}' +
       '@media (max-width:520px){.wax-player-root{width:100%;}.wax-player{grid-template-columns:64px minmax(0,1fr);padding:12px;gap:12px;}.art{width:64px;height:64px;border-radius:16px;}.header{flex-direction:column;align-items:stretch;}.title{font-size:18px;}.track-title{font-size:15px;}}' +
@@ -245,12 +235,10 @@
       elements.trackTitle.textContent = "Station not configured";
       elements.meta.textContent = "Add data-station=\"my-station\" to the embed script.";
     } else if (hasRecognition) {
-      const updatedAt = formatUpdatedAt(state.recognition.created_at);
       elements.trackTitle.textContent = state.recognition.song;
       elements.meta.textContent =
         state.recognition.artist +
-        (state.recognition.album ? " • " + state.recognition.album : "") +
-        (updatedAt ? " • " + updatedAt : "");
+        (state.recognition.album ? " • " + state.recognition.album : "");
     } else if (state.onAir) {
       elements.trackTitle.textContent = "Live now";
       elements.meta.textContent = "Waiting for current track recognition.";

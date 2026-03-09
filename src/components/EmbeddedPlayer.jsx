@@ -3,17 +3,7 @@ import { useWaxStation } from "../hooks/useWaxStation";
 import { buildStationArtworkUrl, buildStreamUrl } from "../lib/waxApi";
 
 const FALLBACK_ART =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2318181b'/%3E%3Cstop offset='1' stop-color='%23ea580c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='320' rx='36' fill='url(%23g)'/%3E%3Ccircle cx='160' cy='160' r='88' fill='rgba(255,255,255,0.12)'/%3E%3Ccircle cx='160' cy='160' r='22' fill='%23fff7ed'/%3E%3C/svg%3E";
-
-function formatUpdatedAt(value) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  return new Intl.DateTimeFormat(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(date);
-}
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23050505'/%3E%3Cstop offset='1' stop-color='%23373737'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='320' rx='36' fill='url(%23g)'/%3E%3Ccircle cx='160' cy='160' r='88' fill='rgba(255,255,255,0.12)'/%3E%3Ccircle cx='160' cy='160' r='22' fill='%23ffffff'/%3E%3C/svg%3E";
 
 function PlayIcon() {
   return (
@@ -87,7 +77,6 @@ export default function EmbeddedPlayer({
     }
     return FALLBACK_ART;
   }, [recognition?.cover_art_url, station?.cover_art_url, station?.station_name]);
-  const updatedAt = formatUpdatedAt(recognition?.created_at);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -244,7 +233,6 @@ export default function EmbeddedPlayer({
               <p className="track-meta">
                 {recognition.artist}
                 {recognition.album ? ` • ${recognition.album}` : ""}
-                {updatedAt ? ` • ${updatedAt}` : ""}
               </p>
             </div>
           ) : onAir ? (

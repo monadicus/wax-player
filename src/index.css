@@ -4,10 +4,10 @@
   color-scheme: dark;
   font-family: "Space Grotesk", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(249, 115, 22, 0.28), transparent 42%),
-    radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.2), transparent 38%),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 42%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.04), transparent 38%),
     transparent;
-  color: #fef2e8;
+  color: #ffffff;
 }
 
 * {
@@ -58,14 +58,12 @@ a {
 
 .player-card {
   backdrop-filter: blur(18px);
-  background:
-    linear-gradient(135deg, rgba(23, 23, 23, 0.96), rgba(41, 37, 36, 0.92)),
-    linear-gradient(180deg, rgba(249, 115, 22, 0.14), transparent 55%);
-  border: 1px solid rgba(254, 215, 170, 0.18);
+  background: linear-gradient(135deg, rgba(8, 8, 8, 0.98), rgba(26, 26, 26, 0.94));
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   display: grid;
   gap: 16px;
   grid-template-columns: 92px minmax(0, 1fr);
@@ -95,13 +93,13 @@ a {
 }
 
 .setup-copy p {
-  color: rgba(254, 242, 232, 0.78);
+  color: rgba(255, 255, 255, 0.74);
   margin: 8px 0 16px;
 }
 
 .setup-copy code {
-  background: rgba(255, 247, 237, 0.08);
-  border: 1px solid rgba(254, 215, 170, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   display: inline-block;
   padding: 10px 12px;
@@ -133,7 +131,7 @@ a {
 }
 
 .eyebrow {
-  color: #fdba74;
+  color: #d4d4d4;
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   margin: 0 0 6px;
@@ -148,21 +146,21 @@ a {
 }
 
 .status-group a {
-  color: rgba(255, 237, 213, 0.88);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.72rem;
   text-decoration: none;
 }
 
 .status-group a:hover {
-  color: #fff7ed;
+  color: #ffffff;
 }
 
 .status-pill {
   align-items: center;
-  background: rgba(255, 247, 237, 0.08);
-  border: 1px solid rgba(255, 237, 213, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  color: rgba(255, 237, 213, 0.76);
+  color: rgba(255, 255, 255, 0.72);
   display: inline-flex;
   font-size: 0.72rem;
   gap: 8px;
@@ -170,9 +168,9 @@ a {
 }
 
 .status-pill--live {
-  background: rgba(249, 115, 22, 0.16);
-  border-color: rgba(251, 146, 60, 0.24);
-  color: #fff7ed;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.24);
+  color: #ffffff;
 }
 
 .status-dot {
@@ -207,7 +205,7 @@ a {
 }
 
 .track-meta {
-  color: rgba(255, 237, 213, 0.72);
+  color: rgba(255, 255, 255, 0.68);
   font-size: 0.7rem;
   line-height: 1.4;
   margin: 0;
@@ -219,7 +217,7 @@ a {
 .inline-link {
   background: none;
   border: 0;
-  color: #fdba74;
+  color: #ffffff;
   cursor: pointer;
   margin-left: 8px;
   padding: 0;
@@ -235,10 +233,10 @@ a {
 .play-button,
 .mute-button {
   align-items: center;
-  background: rgba(255, 247, 237, 0.08);
-  border: 1px solid rgba(255, 237, 213, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  color: #fff7ed;
+  color: #ffffff;
   cursor: pointer;
   display: inline-flex;
   height: 42px;
@@ -252,8 +250,8 @@ a {
 
 .play-button:hover,
 .mute-button:hover {
-  background: rgba(255, 247, 237, 0.14);
-  border-color: rgba(255, 237, 213, 0.24);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
   transform: translateY(-1px);
 }
 
@@ -271,27 +269,25 @@ a {
 }
 
 .play-button {
-  background:
-    linear-gradient(135deg, rgba(251, 146, 60, 0.94), rgba(249, 115, 22, 0.86));
-  border-color: rgba(255, 237, 213, 0.2);
-  color: #1c1917;
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #050505;
 }
 
 .play-button:hover {
-  background:
-    linear-gradient(135deg, rgba(253, 186, 116, 0.98), rgba(249, 115, 22, 0.92));
+  background: #e5e5e5;
 }
 
 .volume-control input {
-  accent-color: #fb923c;
+  accent-color: #ffffff;
   width: 100%;
 }
 
 .error-banner {
-  background: rgba(127, 29, 29, 0.26);
-  border: 1px solid rgba(248, 113, 113, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
-  color: #fecaca;
+  color: #f5f5f5;
   font-size: 0.78rem;
   margin: 0;
   padding: 8px 10px;
@@ -299,8 +295,8 @@ a {
 
 .spinner {
   animation: spin 0.85s linear infinite;
-  border: 2px solid rgba(28, 25, 23, 0.28);
-  border-top-color: #1c1917;
+  border: 2px solid rgba(5, 5, 5, 0.25);
+  border-top-color: #050505;
   border-radius: 999px;
   display: inline-block;
   height: 18px;

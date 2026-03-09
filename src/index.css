@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@400;500;700&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "Space Grotesk", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(249, 115, 22, 0.28), transparent 42%),
+    radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.2), transparent 38%),
+    transparent;
+  color: #fef2e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.app-shell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 12px;
+}
+
+.player-card {
+  backdrop-filter: blur(18px);
+  background:
+    linear-gradient(135deg, rgba(23, 23, 23, 0.96), rgba(41, 37, 36, 0.92)),
+    linear-gradient(180deg, rgba(249, 115, 22, 0.14), transparent 55%);
+  border: 1px solid rgba(254, 215, 170, 0.18);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 92px minmax(0, 1fr);
+  max-width: 480px;
+  padding: 16px;
+  width: min(100%, 480px);
+}
+
+.player-card--empty {
+  display: block;
+  max-width: 460px;
+}
+
+.setup-copy h1,
+.player-header h1 {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.setup-copy p,
+.setup-copy code,
+.track-meta,
+.status-group a,
+.socket-indicator,
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.setup-copy p {
+  color: rgba(254, 242, 232, 0.78);
+  margin: 8px 0 16px;
+}
+
+.setup-copy code {
+  background: rgba(255, 247, 237, 0.08);
+  border: 1px solid rgba(254, 215, 170, 0.16);
+  border-radius: 12px;
+  display: inline-block;
+  padding: 10px 12px;
+}
+
+.artwork {
+  aspect-ratio: 1;
+  border-radius: 20px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  display: block;
+  height: 92px;
+  object-fit: cover;
+  width: 92px;
+}
+
+.player-content {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.player-header {
+  align-items: start;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  color: #fdba74;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.status-group {
+  align-items: end;
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+}
+
+.status-group a {
+  color: rgba(255, 237, 213, 0.88);
+  font-size: 0.72rem;
+  text-decoration: none;
+}
+
+.status-group a:hover {
+  color: #fff7ed;
+}
+
+.status-pill {
+  align-items: center;
+  background: rgba(255, 247, 237, 0.08);
+  border: 1px solid rgba(255, 237, 213, 0.1);
+  border-radius: 999px;
+  color: rgba(255, 237, 213, 0.76);
+  display: inline-flex;
+  font-size: 0.72rem;
+  gap: 8px;
+  padding: 6px 10px;
+}
+
+.status-pill--live {
+  background: rgba(249, 115, 22, 0.16);
+  border-color: rgba(251, 146, 60, 0.24);
+  color: #fff7ed;
+}
+
+.status-dot {
+  background: currentColor;
+  border-radius: 999px;
+  display: block;
+  height: 8px;
+  width: 8px;
+}
+
+.status-pill--live .status-dot {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.track-panel {
+  min-height: 42px;
+}
+
+.message-stack {
+  display: grid;
+  gap: 4px;
+}
+
+.track-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-meta {
+  color: rgba(255, 237, 213, 0.72);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inline-link {
+  background: none;
+  border: 0;
+  color: #fdba74;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 0;
+}
+
+.player-controls {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+}
+
+.play-button,
+.mute-button {
+  align-items: center;
+  background: rgba(255, 247, 237, 0.08);
+  border: 1px solid rgba(255, 237, 213, 0.12);
+  border-radius: 16px;
+  color: #fff7ed;
+  cursor: pointer;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  transition:
+    transform 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+  width: 42px;
+}
+
+.play-button:hover,
+.mute-button:hover {
+  background: rgba(255, 247, 237, 0.14);
+  border-color: rgba(255, 237, 213, 0.24);
+  transform: translateY(-1px);
+}
+
+.play-button:disabled,
+.mute-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+.play-button svg,
+.mute-button svg {
+  height: 20px;
+  width: 20px;
+}
+
+.play-button {
+  background:
+    linear-gradient(135deg, rgba(251, 146, 60, 0.94), rgba(249, 115, 22, 0.86));
+  border-color: rgba(255, 237, 213, 0.2);
+  color: #1c1917;
+}
+
+.play-button:hover {
+  background:
+    linear-gradient(135deg, rgba(253, 186, 116, 0.98), rgba(249, 115, 22, 0.92));
+}
+
+.volume-control input {
+  accent-color: #fb923c;
+  width: 100%;
+}
+
+.socket-indicator {
+  color: rgba(255, 237, 213, 0.56);
+  font-size: 0.64rem;
+  justify-self: end;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.error-banner {
+  background: rgba(127, 29, 29, 0.26);
+  border: 1px solid rgba(248, 113, 113, 0.18);
+  border-radius: 12px;
+  color: #fecaca;
+  font-size: 0.78rem;
+  margin: 0;
+  padding: 8px 10px;
+}
+
+.spinner {
+  animation: spin 0.85s linear infinite;
+  border: 2px solid rgba(28, 25, 23, 0.28);
+  border-top-color: #1c1917;
+  border-radius: 999px;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 520px) {
+  .player-card {
+    gap: 14px;
+    grid-template-columns: 78px minmax(0, 1fr);
+    padding: 14px;
+  }
+
+  .artwork {
+    height: 78px;
+    width: 78px;
+  }
+
+  .player-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .status-group {
+    justify-items: start;
+  }
+
+  .player-controls {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+
+  .socket-indicator {
+    display: none;
+  }
+}

@@ -1,5 +1,7 @@
 <?php
 
+// Copyright 2026 MONADIC.US
+
 declare(strict_types=1);
 
 $path = $_GET["path"] ?? "";

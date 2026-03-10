@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 (function () {
   const API_BASE_URL = "https://api.wax.live";
   const STREAM_BASE_URL = "https://wax.live";

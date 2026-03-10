@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 

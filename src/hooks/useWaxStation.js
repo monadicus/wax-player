@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import { startTransition, useEffect, useState } from "react";
 import {
   fetchCurrentRecognition,

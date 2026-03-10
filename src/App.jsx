@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import EmbeddedPlayer from "./components/EmbeddedPlayer";
 import {
   getMissingStationMessage,

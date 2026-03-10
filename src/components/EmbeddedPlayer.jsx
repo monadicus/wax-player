@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDraggable } from "../hooks/useDraggable";
 import { useWaxStation } from "../hooks/useWaxStation";

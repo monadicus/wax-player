@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 export const API_BASE_URL = import.meta.env.DEV
   ? "/api"
   : import.meta.env.VITE_API_URL || "https://api.wax.live";

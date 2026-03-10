@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import { useCallback, useRef, useState } from "react";
 
 export function useDraggable() {

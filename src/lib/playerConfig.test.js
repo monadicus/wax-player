@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 import { describe, expect, it } from "vitest";
 import {
   getMissingStationMessage,

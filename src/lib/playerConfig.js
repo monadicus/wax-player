@@ -1,3 +1,5 @@
+// Copyright 2026 MONADIC.US
+
 export function normalizeStationName(value) {
   if (typeof value !== "string") return "";
   return value.trim().replace(/^\/+/, "").toLowerCase();

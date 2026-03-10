@@ -25,6 +25,8 @@ npm run lint
 npm run build
 ```
 
+Pull requests are expected to pass the GitHub Actions CI workflow, which runs the same lint, test, and build commands.
+
 ## Scope
 
 This repository is intentionally narrow:

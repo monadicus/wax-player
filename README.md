@@ -147,6 +147,10 @@ npm test
 npm run build
 ```
 
+## CI
+
+GitHub Actions runs `npm ci`, `npm run lint`, `npm test`, and `npm run build` on pull requests and pushes to `main` or `master`.
+
 ## License
 
 MIT. See [LICENSE](./LICENSE).

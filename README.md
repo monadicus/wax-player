@@ -1,5 +1,13 @@
 # wax-player
 
+<p align="center">
+  <img
+    src="./screenshot-wax-player.png"
+    alt="Example of the wax-player embedded player"
+    width="420"
+  />
+</p>
+
 Single-station embedded player for `wax.live`.
 
 This project builds a small iframe-friendly player that:

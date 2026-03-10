@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useDraggable } from "../hooks/useDraggable";
 import { useWaxStation } from "../hooks/useWaxStation";
 import { buildStationArtworkUrl, buildStreamUrl } from "../lib/waxApi";
 
@@ -58,6 +59,7 @@ export default function EmbeddedPlayer({
 }) {
   const { station, recognition, onAir, loading, error, refreshRecognition } =
     useWaxStation(stationName);
+  const { offset, isDragging, dragHandleProps } = useDraggable();
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(defaultMuted);
@@ -197,7 +199,15 @@ export default function EmbeddedPlayer({
   }, []);
 
   return (
-    <section className="player-card" aria-busy={loading}>
+    <section
+      className={`player-card${isDragging ? " player-card--dragging" : ""}`}
+      aria-busy={loading}
+      style={
+        offset.x || offset.y
+          ? { transform: `translate(${offset.x}px, ${offset.y}px)` }
+          : undefined
+      }
+    >
       <audio ref={audioRef} src={streamUrl} preload="none" playsInline />
       <div className="player-media">
         <img
@@ -214,20 +224,17 @@ export default function EmbeddedPlayer({
       </div>
 
       <div className="player-content">
-        <div className="player-header">
-          <div>
-            <h1>{stationTitle}</h1>
-          </div>
-
-          <div className="status-group">
-            <span className={`status-pill ${onAir ? "status-pill--live" : ""}`}>
-              <span className="status-dot" />
-              {onAir ? "Live" : "Off air"}
-            </span>
+        <div className="player-header drag-handle" {...dragHandleProps}>
+          <h1>
             <a href={stationUrl} target="_blank" rel="noreferrer">
-              Open station
+              {stationTitle}
             </a>
-          </div>
+          </h1>
+
+          <span className={`status-pill ${onAir ? "status-pill--live" : ""}`}>
+            {onAir ? <span className="status-dot" /> : null}
+            {onAir ? "LIVE" : "OFF AIR"}
+          </span>
         </div>
 
         <div className="track-panel" aria-live="polite">
@@ -265,9 +272,8 @@ export default function EmbeddedPlayer({
             </div>
           ) : (
             <div className="message-stack">
-              <p className="track-title">Station is currently off air</p>
-              <p className="track-meta">
-                The embed will update automatically when the stream returns.
+              <p className="track-title track-title--wrap">
+                {station?.description || "Station is currently off air"}
               </p>
             </div>
           )}
@@ -275,7 +281,7 @@ export default function EmbeddedPlayer({
 
         <div className="player-controls">
           <button
-            className="play-button"
+            className={`play-button${isPlaying ? " play-button--playing" : ""}`}
             type="button"
             onClick={togglePlayback}
             disabled={!onAir || !station || Boolean(error)}

@@ -1,4 +1,6 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.wax.live";
+export const API_BASE_URL = import.meta.env.DEV
+  ? "/api"
+  : import.meta.env.VITE_API_URL || "https://api.wax.live";
 export const STREAM_BASE_URL =
   import.meta.env.VITE_STREAM_URL || "https://wax.live";
 

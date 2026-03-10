@@ -79,72 +79,255 @@
     return STREAM_BASE_URL + "/stream/" + encodeURIComponent(mountpoint);
   }
 
+  const PLAY_ICON = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 6.25v11.5l9-5.75-9-5.75Z" fill="currentColor"></path>
+    </svg>
+  `;
+
+  const PAUSE_ICON = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7.5 5.75h3v12.5h-3V5.75Zm6 0h3v12.5h-3V5.75Z" fill="currentColor"></path>
+    </svg>
+  `;
+
+  const VOLUME_ICON = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9.5h4l5-4.5v14l-5-4.5H4v-5Zm11.5-2.11a6 6 0 0 1 0 9.22l-1.36-1.47a4 4 0 0 0 0-6.28l1.36-1.47Zm2.84-2.85a10 10 0 0 1 0 14.92l-1.37-1.46a8 8 0 0 0 0-12l1.37-1.46Z" fill="currentColor"></path>
+    </svg>
+  `;
+
+  const MUTED_ICON = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9.5h4l5-4.5v14l-5-4.5H4v-5Zm10.55 2.5 3.35-3.35 1.4 1.4L15.95 13.4l3.35 3.35-1.4 1.4L14.55 14.8l-3.35 3.35-1.4-1.4 3.35-3.35-3.35-3.35 1.4-1.4L14.55 12Z" fill="currentColor"></path>
+    </svg>
+  `;
+
+  const SPINNER = '<span class="spinner" aria-hidden="true"></span>';
+
   function createTemplate(width, height) {
-    return (
-      '<style>' +
-      ':host{all:initial;}' +
-      '.wax-player-root{display:block;width:' +
-      width +
-      ';max-width:100%;min-height:' +
-      height +
-      ';}' +
-      '.wax-player{box-sizing:border-box;display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;width:100%;min-height:' +
-      height +
-      ';padding:14px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(8,8,8,.98),rgba(26,26,26,.94));box-shadow:0 18px 32px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(18px);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#ffffff;}' +
-      '.wax-player *{box-sizing:border-box;}' +
-      '.media{display:grid;gap:10px;align-content:start;}' +
-      '.art{width:72px;height:72px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 10px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);background:#1c1917;}' +
-      '.brand-link{display:block;width:fit-content;}' +
-      '.brand-mark{display:block;height:auto;}' +
-      '.brand-mark--media{width:72px;}' +
-      '.content{display:grid;gap:12px;min-width:0;}' +
-      '.header{display:flex;justify-content:space-between;align-items:start;gap:10px;}' +
-      '.eyebrow,.meta,.link,.status,.button,.hint{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;}' +
-      '.eyebrow{margin:0 0 6px;color:#d4d4d4;font-size:10px;letter-spacing:.12em;text-transform:uppercase;}' +
-      '.title{margin:0;font-size:20px;line-height:1.05;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
-      '.status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}' +
-      '.status.live{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);color:#ffffff;}' +
-      '.dot{display:block;width:8px;height:8px;border-radius:999px;background:currentColor;}' +
-      '.status.live .dot{animation:waxPulse 1.6s ease-in-out infinite;}' +
-      '.track{display:grid;gap:4px;min-height:40px;}' +
-      '.track-title{margin:0;font-size:16px;line-height:1.15;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
-      '.meta{margin:0;color:rgba(255,255,255,.68);font-size:11px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
-      '.controls{display:flex;align-items:center;gap:10px;}' +
-      '.button{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.06);color:#ffffff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s ease,background .12s ease,border-color .12s ease;}' +
-      '.button:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);}' +
-      '.button:disabled{cursor:not-allowed;opacity:.45;transform:none;}' +
-      '.button.primary{background:#ffffff;color:#050505;border-color:rgba(255,255,255,.32);}' +
-      '.button.primary:hover{background:#e5e5e5;}' +
-      '.link{color:rgba(255,255,255,.82);font-size:11px;text-decoration:none;}' +
-      '.link:hover{color:#ffffff;}' +
-      '.hint{color:#f5f5f5;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;font-size:11px;line-height:1.4;display:none;}' +
-      '.hint.visible{display:block;}' +
-      '@keyframes waxPulse{0%,100%{opacity:.45;transform:scale(.9);}50%{opacity:1;transform:scale(1);}}' +
-      '@media (max-width:520px){.wax-player-root{width:100%;}.wax-player{grid-template-columns:64px minmax(0,1fr);padding:12px;gap:12px;}.art{width:64px;height:64px;border-radius:16px;}.brand-mark--media{width:64px;}.header{flex-direction:column;align-items:stretch;}.title{font-size:18px;}.track-title{font-size:15px;}}' +
-      "</style>" +
-      '<div class="wax-player-root">' +
-      '<section class="wax-player" aria-live="polite">' +
-      '<div class="media">' +
-      '<img class="art" alt="Station artwork">' +
-      '<a class="brand-link" href="https://wax.live" target="_blank" rel="noreferrer" aria-label="Visit wax.live"><img class="brand-mark brand-mark--media" alt="WaxLive"></a>' +
-      "</div>" +
-      '<div class="content">' +
-      '<div class="header">' +
-      '<div><h2 class="title">Loading station...</h2></div>' +
-      '<div class="status"><span class="dot"></span><span class="status-text">Loading</span></div>' +
-      "</div>" +
-      '<div class="track"><p class="track-title">Connecting...</p><p class="meta">Checking station status.</p></div>' +
-      '<div class="controls">' +
-      '<button class="button primary play" type="button" disabled>Play</button>' +
-      '<button class="button mute" type="button">Mute</button>' +
-      '<a class="link" target="_blank" rel="noreferrer">Open station</a>' +
-      "</div>" +
-      '<p class="hint"></p>' +
-      '<audio preload="none" playsinline></audio>' +
-      "</div>" +
-      "</section>" +
-      "</div>"
-    );
+    return `
+      <style>
+        :host{all:initial;}
+        .wax-player-root{display:block;width:${width};max-width:100%;}
+        .wax-player-root,.wax-player-root *{box-sizing:border-box;}
+        .sr-only{border:0;clip:rect(0 0 0 0);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px;}
+        .player-card{
+          -webkit-backdrop-filter:blur(32px) saturate(1.4);
+          backdrop-filter:blur(32px) saturate(1.4);
+          align-items:start;
+          background:linear-gradient(135deg,rgba(18,18,18,.55),rgba(30,30,30,.45));
+          border:1px solid rgba(255,255,255,.14);
+          border-radius:22px;
+          box-shadow:0 24px 48px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);
+          color:#ffffff;
+          display:grid;
+          gap:16px;
+          grid-template-columns:92px minmax(0,1fr);
+          min-height:${height};
+          padding:16px;
+          transition:box-shadow 300ms ease;
+          width:100%;
+          font-family:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        }
+        .player-media{align-content:start;display:grid;gap:12px;}
+        .artwork{
+          aspect-ratio:1;
+          border-radius:16px;
+          box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1);
+          display:block;
+          height:92px;
+          object-fit:cover;
+          transition:box-shadow 300ms ease;
+          width:92px;
+        }
+        .waxlive-logo-link{display:block;width:fit-content;}
+        .waxlive-logo{display:block;height:auto;opacity:.5;transition:opacity 200ms ease;}
+        .player-card:hover .waxlive-logo,.waxlive-logo-link:hover .waxlive-logo{opacity:.7;}
+        .waxlive-logo--media{max-width:92px;width:100%;}
+        .player-content{display:grid;gap:12px;min-width:0;}
+        .player-header{align-items:center;display:flex;gap:12px;justify-content:space-between;}
+        .title{font-size:clamp(1.05rem,2vw,1.25rem);font-weight:700;letter-spacing:-.01em;line-height:1.1;margin:0;min-width:0;}
+        .title-link{color:inherit;text-decoration:none;transition:opacity 150ms ease;}
+        .title-link:hover{opacity:.75;}
+        .status-pill{
+          flex-shrink:0;
+          align-items:center;
+          background:rgba(255,255,255,.05);
+          border:1px solid rgba(255,255,255,.08);
+          border-radius:999px;
+          color:rgba(255,255,255,.5);
+          display:inline-flex;
+          font-size:.68rem;
+          font-weight:500;
+          gap:6px;
+          letter-spacing:.02em;
+          padding:4px 10px 4px 8px;
+          transition:background 200ms ease,border-color 200ms ease,color 200ms ease;
+        }
+        .status-pill--live{background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.25);color:#6ee7b7;}
+        .status-dot{background:currentColor;border-radius:999px;display:none;height:7px;width:7px;}
+        .status-pill--live .status-dot{display:block;animation:pulse 1.8s ease-in-out infinite;background:#34d399;}
+        .track-panel{min-height:38px;}
+        .message-stack{display:grid;gap:3px;}
+        .track-title{
+          font-size:.92rem;
+          font-weight:700;
+          letter-spacing:-.005em;
+          line-height:1.2;
+          margin:0;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+        }
+        .track-title--wrap{
+          display:-webkit-box;
+          -webkit-box-orient:vertical;
+          -webkit-line-clamp:2;
+          white-space:normal;
+        }
+        .track-meta{
+          color:rgba(255,255,255,.5);
+          font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+          font-size:.68rem;
+          line-height:1.4;
+          margin:0;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+        }
+        .track-meta--hidden{display:none;}
+        .player-controls{align-items:center;display:grid;gap:8px;grid-template-columns:auto auto minmax(0,1fr);}
+        .play-button,.mute-button{
+          align-items:center;
+          background:transparent;
+          border:2px solid rgba(255,255,255,.45);
+          border-radius:999px;
+          color:rgba(255,255,255,.45);
+          cursor:pointer;
+          display:inline-flex;
+          height:42px;
+          justify-content:center;
+          transition:all 150ms cubic-bezier(.4,0,.2,1);
+          width:42px;
+        }
+        .play-button:hover,.mute-button:hover{border-color:rgba(255,255,255,.7);color:rgba(255,255,255,.7);}
+        .play-button:active,.mute-button:active{transform:scale(.94);transition-duration:60ms;}
+        .play-button:disabled,.mute-button:disabled{
+          border-color:rgba(255,255,255,.2);
+          color:rgba(255,255,255,.2);
+          cursor:not-allowed;
+        }
+        .play-button:disabled:active,.mute-button:disabled:active{transform:none;}
+        .play-button svg{height:26px;margin-left:2px;width:26px;}
+        .play-button{border-color:rgba(255,255,255,.55);color:rgba(255,255,255,.55);}
+        .play-button:hover{border-color:#ffffff;color:#ffffff;}
+        .play-button--playing{animation:play-pulse 2s cubic-bezier(.4,0,.6,1) infinite;border-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8);}
+        .mute-button{height:34px;width:34px;}
+        .mute-button svg{height:18px;width:18px;}
+        .volume-control{align-items:center;display:flex;}
+        .volume-input{
+          -webkit-appearance:none;
+          appearance:none;
+          background:transparent;
+          cursor:pointer;
+          height:24px;
+          width:100%;
+        }
+        .volume-input::-webkit-slider-runnable-track{background:rgba(255,255,255,.1);border-radius:999px;height:4px;}
+        .volume-input::-webkit-slider-thumb{
+          -webkit-appearance:none;
+          appearance:none;
+          background:#ffffff;
+          border:none;
+          border-radius:999px;
+          box-shadow:0 1px 4px rgba(0,0,0,.4);
+          height:14px;
+          margin-top:-5px;
+          transition:transform 150ms ease,box-shadow 150ms ease;
+          width:14px;
+        }
+        .volume-input::-webkit-slider-thumb:hover{box-shadow:0 1px 6px rgba(255,255,255,.15),0 1px 4px rgba(0,0,0,.4);transform:scale(1.15);}
+        .volume-input::-moz-range-track{background:rgba(255,255,255,.1);border:none;border-radius:999px;height:4px;}
+        .volume-input::-moz-range-thumb{background:#ffffff;border:none;border-radius:999px;box-shadow:0 1px 4px rgba(0,0,0,.4);height:14px;width:14px;}
+        .volume-input:disabled{cursor:not-allowed;opacity:.3;}
+        .volume-input:disabled::-webkit-slider-thumb{box-shadow:none;transform:none;}
+        .hint{
+          background:rgba(239,68,68,.08);
+          border:1px solid rgba(239,68,68,.18);
+          border-radius:10px;
+          color:#fca5a5;
+          display:none;
+          font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+          font-size:.72rem;
+          line-height:1.4;
+          margin:0;
+          padding:8px 10px;
+        }
+        .hint.visible{display:block;}
+        .spinner{
+          animation:spin .85s linear infinite;
+          border:2px solid rgba(255,255,255,.15);
+          border-top-color:rgba(255,255,255,.6);
+          border-radius:999px;
+          display:inline-block;
+          height:18px;
+          width:18px;
+        }
+        @keyframes pulse{
+          0%,100%{opacity:.4;transform:scale(.85);}
+          50%{opacity:1;transform:scale(1);}
+        }
+        @keyframes play-pulse{
+          0%,100%{border-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8);}
+          50%{border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.35);}
+        }
+        @keyframes spin{to{transform:rotate(360deg);}}
+        @media (max-width:520px){
+          .player-card{gap:14px;grid-template-columns:72px minmax(0,1fr);padding:14px;}
+          .artwork{height:72px;width:72px;}
+          .waxlive-logo--media{max-width:72px;}
+          .player-header{align-items:flex-start;flex-direction:column;gap:10px;}
+        }
+      </style>
+      <div class="wax-player-root">
+        <section class="player-card" aria-live="polite">
+          <audio preload="none" playsinline></audio>
+          <div class="player-media">
+            <img class="artwork" alt="Station artwork">
+            <a class="waxlive-logo-link" href="https://wax.live" target="_blank" rel="noreferrer" aria-label="Visit wax.live">
+              <img class="waxlive-logo waxlive-logo--media" alt="WaxLive">
+            </a>
+          </div>
+          <div class="player-content">
+            <div class="player-header">
+              <h2 class="title">
+                <a class="title-link" href="https://wax.live" target="_blank" rel="noreferrer">Loading station...</a>
+              </h2>
+              <span class="status-pill">
+                <span class="status-dot"></span>
+                <span class="status-text">OFF AIR</span>
+              </span>
+            </div>
+            <div class="track-panel">
+              <div class="message-stack">
+                <p class="track-title">Connecting...</p>
+                <p class="track-meta">Checking station status.</p>
+              </div>
+            </div>
+            <div class="player-controls">
+              <button class="play-button" type="button" disabled aria-label="Play stream"></button>
+              <button class="mute-button" type="button" aria-label="Mute stream"></button>
+              <label class="volume-control">
+                <span class="sr-only">Volume</span>
+                <input class="volume-input" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+              </label>
+            </div>
+            <p class="hint"></p>
+          </div>
+        </section>
+      </div>
+    `;
   }
 
   const script = document.currentScript;
@@ -169,24 +352,24 @@
   script.insertAdjacentElement("afterend", mount);
 
   const elements = {
-    art: shadow.querySelector(".art"),
-    logoMedia: shadow.querySelector(".brand-mark--media"),
-    title: shadow.querySelector(".title"),
-    status: shadow.querySelector(".status"),
+    art: shadow.querySelector(".artwork"),
+    logoMedia: shadow.querySelector(".waxlive-logo--media"),
+    titleLink: shadow.querySelector(".title-link"),
+    status: shadow.querySelector(".status-pill"),
+    statusDot: shadow.querySelector(".status-dot"),
     statusText: shadow.querySelector(".status-text"),
     trackTitle: shadow.querySelector(".track-title"),
-    meta: shadow.querySelector(".meta"),
-    play: shadow.querySelector(".play"),
-    mute: shadow.querySelector(".mute"),
-    link: shadow.querySelector(".link"),
+    meta: shadow.querySelector(".track-meta"),
+    play: shadow.querySelector(".play-button"),
+    mute: shadow.querySelector(".mute-button"),
+    volume: shadow.querySelector(".volume-input"),
     hint: shadow.querySelector(".hint"),
     audio: shadow.querySelector("audio"),
   };
 
-  elements.link.textContent = "Open station";
-  elements.link.setAttribute("aria-label", titleText);
   elements.art.src = FALLBACK_ART;
   elements.logoMedia.src = logoUrl;
+  elements.audio.volume = Number(elements.volume.value);
   elements.audio.muted = defaultMuted;
 
   const state = {
@@ -233,50 +416,89 @@
     return FALLBACK_ART;
   }
 
+  function setTrack(title, meta, wrap) {
+    elements.trackTitle.textContent = title || "";
+    elements.trackTitle.className = wrap
+      ? "track-title track-title--wrap"
+      : "track-title";
+
+    if (meta) {
+      elements.meta.textContent = meta;
+      elements.meta.className = "track-meta";
+    } else {
+      elements.meta.textContent = "";
+      elements.meta.className = "track-meta track-meta--hidden";
+    }
+  }
+
+  function isMuted() {
+    return elements.audio.muted || Number(elements.volume.value) === 0;
+  }
+
   function render() {
     const hasRecognition =
       state.recognition && state.recognition.song && state.recognition.artist;
-
-    elements.title.textContent = getDisplayTitle();
-    elements.statusText.textContent = state.onAir ? "On air" : "Off air";
-    elements.status.className = state.onAir ? "status live" : "status";
-    elements.art.src = getDisplayArt();
-    elements.link.href =
+    const stationUrl =
       "https://wax.live/" +
       encodeURIComponent(
         state.station ? state.station.station_name : stationName || "",
       );
 
+    elements.titleLink.textContent = getDisplayTitle();
+    elements.titleLink.href = stationUrl;
+    elements.titleLink.setAttribute("aria-label", titleText);
+    elements.statusText.textContent = state.onAir ? "LIVE" : "OFF AIR";
+    elements.status.className = state.onAir
+      ? "status-pill status-pill--live"
+      : "status-pill";
+    elements.statusDot.style.display = state.onAir ? "block" : "none";
+    elements.art.src = getDisplayArt();
+
     if (!stationName) {
-      elements.trackTitle.textContent = "Station not configured";
-      elements.meta.textContent = "Add data-station=\"my-station\" to the embed script.";
+      setTrack(
+        "Station not configured",
+        'Add data-station="my-station" to the embed script.',
+        false,
+      );
     } else if (state.onAir && hasRecognition) {
-      elements.trackTitle.textContent = state.recognition.song;
-      elements.meta.textContent =
+      setTrack(
+        state.recognition.song,
         state.recognition.artist +
-        (state.recognition.album ? " • " + state.recognition.album : "");
+          (state.recognition.album ? " • " + state.recognition.album : ""),
+        false,
+      );
     } else if (state.onAir) {
-      elements.trackTitle.textContent = "Live now";
-      elements.meta.textContent = "Waiting for current track recognition.";
+      setTrack("Listening live", "Waiting for current track recognition.", false);
     } else if (state.station) {
-      elements.trackTitle.textContent = "Station is currently off air";
-      elements.meta.textContent = "Playback will become available automatically when live.";
+      setTrack(
+        state.station.description || "Station is currently off air",
+        "",
+        true,
+      );
     } else {
-      elements.trackTitle.textContent = "Loading station...";
-      elements.meta.textContent = "Checking station status.";
+      setTrack("Loading station...", "Checking station status.", false);
     }
 
-    if (state.busy) {
-      elements.play.textContent = "Loading";
-    } else if (state.playing) {
-      elements.play.textContent = "Pause";
-    } else {
-      elements.play.textContent = "Play";
-    }
-
+    elements.play.className = state.playing
+      ? "play-button play-button--playing"
+      : "play-button";
+    elements.play.innerHTML = state.busy
+      ? SPINNER
+      : state.playing
+        ? PAUSE_ICON
+        : PLAY_ICON;
+    elements.play.setAttribute(
+      "aria-label",
+      state.playing ? "Pause stream" : "Play stream",
+    );
     elements.play.disabled = !state.station || !state.onAir || state.busy;
-    elements.mute.disabled = !state.station;
-    elements.mute.textContent = elements.audio.muted ? "Unmute" : "Mute";
+    elements.mute.disabled = !state.station || state.busy;
+    elements.mute.innerHTML = isMuted() ? MUTED_ICON : VOLUME_ICON;
+    elements.mute.setAttribute(
+      "aria-label",
+      isMuted() ? "Unmute stream" : "Mute stream",
+    );
+    elements.volume.disabled = !state.station;
   }
 
   async function loadRecognition() {
@@ -363,8 +585,7 @@
           ? "Station not found."
           : "Could not load station data.",
       );
-      elements.trackTitle.textContent = "Unable to load station";
-      elements.meta.textContent = "Check the station name and try again.";
+      setTrack("Unable to load station", "Check the station name and try again.", false);
     }
   }
 
@@ -397,6 +618,15 @@
 
   elements.mute.addEventListener("click", function () {
     elements.audio.muted = !elements.audio.muted;
+    render();
+  });
+
+  elements.volume.addEventListener("input", function () {
+    const nextVolume = Number(elements.volume.value);
+    elements.audio.volume = nextVolume;
+    if (nextVolume > 0 && elements.audio.muted) {
+      elements.audio.muted = false;
+    }
     render();
   });
 

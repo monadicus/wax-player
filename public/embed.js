@@ -141,10 +141,10 @@
           transition:box-shadow 300ms ease;
           width:92px;
         }
-        .waxlive-logo-link{display:block;width:fit-content;}
+        .waxlive-logo-link{display:block;width:92px;}
         .waxlive-logo{display:block;height:auto;opacity:.5;transition:opacity 200ms ease;}
         .player-card:hover .waxlive-logo,.waxlive-logo-link:hover .waxlive-logo{opacity:.7;}
-        .waxlive-logo--media{max-width:92px;width:100%;}
+        .waxlive-logo--media{display:block;width:100%;}
         .player-content{display:grid;gap:12px;min-width:0;}
         .player-header{align-items:center;display:flex;gap:12px;justify-content:space-between;}
         .title{font-size:clamp(1.05rem,2vw,1.25rem);font-weight:700;letter-spacing:-.01em;line-height:1.1;margin:0;min-width:0;}
@@ -286,7 +286,7 @@
         @media (max-width:520px){
           .player-card{gap:14px;grid-template-columns:72px minmax(0,1fr);padding:14px;}
           .artwork{height:72px;width:72px;}
-          .waxlive-logo--media{max-width:72px;}
+          .waxlive-logo-link{width:72px;}
           .player-header{align-items:flex-start;flex-direction:column;gap:10px;}
         }
       </style>

@@ -208,7 +208,7 @@
   }
 
   function getDisplayArt() {
-    if (state.recognition && state.recognition.cover_art_url) {
+    if (state.onAir && state.recognition && state.recognition.cover_art_url) {
       return state.recognition.cover_art_url;
     }
     if (state.station && state.station.cover_art_url) {
@@ -234,7 +234,7 @@
     if (!stationName) {
       elements.trackTitle.textContent = "Station not configured";
       elements.meta.textContent = "Add data-station=\"my-station\" to the embed script.";
-    } else if (hasRecognition) {
+    } else if (state.onAir && hasRecognition) {
       elements.trackTitle.textContent = state.recognition.song;
       elements.meta.textContent =
         state.recognition.artist +

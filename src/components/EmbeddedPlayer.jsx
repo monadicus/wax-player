@@ -69,14 +69,14 @@ export default function EmbeddedPlayer({
   const streamUrl = station ? buildStreamUrl(station.mountpoint) : "";
   const stationUrl = `https://wax.live/${stationName}`;
   const artUrl = useMemo(() => {
-    if (recognition?.cover_art_url) {
+    if (onAir && recognition?.cover_art_url) {
       return recognition.cover_art_url;
     }
     if (station?.cover_art_url) {
       return buildStationArtworkUrl(station.station_name);
     }
     return FALLBACK_ART;
-  }, [recognition?.cover_art_url, station?.cover_art_url, station?.station_name]);
+  }, [onAir, recognition?.cover_art_url, station?.cover_art_url, station?.station_name]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -227,7 +227,7 @@ export default function EmbeddedPlayer({
               <p className="track-title">Unable to load station</p>
               <p className="track-meta">{error}</p>
             </div>
-          ) : recognition?.song && recognition?.artist ? (
+          ) : onAir && recognition?.song && recognition?.artist ? (
             <div className="message-stack">
               <p className="track-title">{recognition.song}</p>
               <p className="track-meta">

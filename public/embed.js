@@ -36,6 +36,10 @@
     );
   }
 
+  function buildLogoUrl(script) {
+    return new URL("./waxlive-logo.svg", script.src).toString();
+  }
+
   async function requestJson(script, endpoint) {
     let response;
 
@@ -86,7 +90,10 @@
       height +
       ';padding:14px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(8,8,8,.98),rgba(26,26,26,.94));box-shadow:0 18px 32px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(18px);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#ffffff;}' +
       '.wax-player *{box-sizing:border-box;}' +
+      '.media{display:grid;gap:10px;align-content:start;}' +
       '.art{width:72px;height:72px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 10px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);background:#1c1917;}' +
+      '.brand-mark{display:block;height:auto;}' +
+      '.brand-mark--media{width:72px;}' +
       '.content{display:grid;gap:12px;min-width:0;}' +
       '.header{display:flex;justify-content:space-between;align-items:start;gap:10px;}' +
       '.eyebrow,.meta,.link,.status,.button,.hint{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;}' +
@@ -110,11 +117,14 @@
       '.hint{color:#f5f5f5;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;font-size:11px;line-height:1.4;display:none;}' +
       '.hint.visible{display:block;}' +
       '@keyframes waxPulse{0%,100%{opacity:.45;transform:scale(.9);}50%{opacity:1;transform:scale(1);}}' +
-      '@media (max-width:520px){.wax-player-root{width:100%;}.wax-player{grid-template-columns:64px minmax(0,1fr);padding:12px;gap:12px;}.art{width:64px;height:64px;border-radius:16px;}.header{flex-direction:column;align-items:stretch;}.title{font-size:18px;}.track-title{font-size:15px;}}' +
+      '@media (max-width:520px){.wax-player-root{width:100%;}.wax-player{grid-template-columns:64px minmax(0,1fr);padding:12px;gap:12px;}.art{width:64px;height:64px;border-radius:16px;}.brand-mark--media{width:64px;}.header{flex-direction:column;align-items:stretch;}.title{font-size:18px;}.track-title{font-size:15px;}}' +
       "</style>" +
       '<div class="wax-player-root">' +
       '<section class="wax-player" aria-live="polite">' +
+      '<div class="media">' +
       '<img class="art" alt="Station artwork">' +
+      '<img class="brand-mark brand-mark--media" alt="">' +
+      "</div>" +
       '<div class="content">' +
       '<div class="header">' +
       '<div><h2 class="title">Loading station...</h2></div>' +
@@ -144,6 +154,7 @@
   const autoplay = parseBoolean(script.dataset.autoplay);
   const defaultMuted = parseBoolean(script.dataset.muted);
   const titleText = script.dataset.title || "WaxLive player";
+  const logoUrl = buildLogoUrl(script);
 
   const mount = document.createElement("div");
   mount.style.display = "block";
@@ -156,6 +167,7 @@
 
   const elements = {
     art: shadow.querySelector(".art"),
+    logoMedia: shadow.querySelector(".brand-mark--media"),
     title: shadow.querySelector(".title"),
     status: shadow.querySelector(".status"),
     statusText: shadow.querySelector(".status-text"),
@@ -171,6 +183,7 @@
   elements.link.textContent = "Open station";
   elements.link.setAttribute("aria-label", titleText);
   elements.art.src = FALLBACK_ART;
+  elements.logoMedia.src = logoUrl;
   elements.audio.muted = defaultMuted;
 
   const state = {

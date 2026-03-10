@@ -4,6 +4,7 @@ import { buildStationArtworkUrl, buildStreamUrl } from "../lib/waxApi";
 
 const FALLBACK_ART =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23050505'/%3E%3Cstop offset='1' stop-color='%23373737'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='320' rx='36' fill='url(%23g)'/%3E%3Ccircle cx='160' cy='160' r='88' fill='rgba(255,255,255,0.12)'/%3E%3Ccircle cx='160' cy='160' r='22' fill='%23ffffff'/%3E%3C/svg%3E";
+const WAXLIVE_LOGO_URL = `${import.meta.env.BASE_URL}waxlive-logo.svg`;
 
 function PlayIcon() {
   return (
@@ -65,7 +66,8 @@ export default function EmbeddedPlayer({
   const [audioError, setAudioError] = useState("");
   const autoplayAttemptedRef = useRef(false);
 
-  const stationTitle = station?.title?.trim() || station?.station_name || stationName;
+  const stationTitle =
+    station?.title?.trim() || station?.station_name || stationName;
   const streamUrl = station ? buildStreamUrl(station.mountpoint) : "";
   const stationUrl = `https://wax.live/${stationName}`;
   const artUrl = useMemo(() => {
@@ -76,7 +78,12 @@ export default function EmbeddedPlayer({
       return buildStationArtworkUrl(station.station_name);
     }
     return FALLBACK_ART;
-  }, [onAir, recognition?.cover_art_url, station?.cover_art_url, station?.station_name]);
+  }, [
+    onAir,
+    recognition?.cover_art_url,
+    station?.cover_art_url,
+    station?.station_name,
+  ]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -192,12 +199,19 @@ export default function EmbeddedPlayer({
   return (
     <section className="player-card" aria-busy={loading}>
       <audio ref={audioRef} src={streamUrl} preload="none" playsInline />
-      <img
-        className="artwork"
-        src={artUrl}
-        alt={`${stationTitle} artwork`}
-        loading="eager"
-      />
+      <div className="player-media">
+        <img
+          className="artwork"
+          src={artUrl}
+          alt={`${stationTitle} artwork`}
+          loading="eager"
+        />
+        <img
+          className="waxlive-logo waxlive-logo--media"
+          src={WAXLIVE_LOGO_URL}
+          alt=""
+        />
+      </div>
 
       <div className="player-content">
         <div className="player-header">
@@ -267,7 +281,13 @@ export default function EmbeddedPlayer({
             disabled={!onAir || !station || Boolean(error)}
             aria-label={isPlaying ? "Pause stream" : "Play stream"}
           >
-            {audioBusy ? <LoadingSpinner /> : isPlaying ? <PauseIcon /> : <PlayIcon />}
+            {audioBusy ? (
+              <LoadingSpinner />
+            ) : isPlaying ? (
+              <PauseIcon />
+            ) : (
+              <PlayIcon />
+            )}
           </button>
 
           <button

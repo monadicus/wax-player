@@ -117,6 +117,22 @@ a {
   width: 92px;
 }
 
+.player-media {
+  align-content: start;
+  display: grid;
+  gap: 12px;
+}
+
+.waxlive-logo {
+  display: block;
+  height: auto;
+}
+
+.waxlive-logo--media {
+  max-width: 92px;
+  width: 100%;
+}
+
 .player-content {
   display: grid;
   gap: 14px;
@@ -332,6 +348,10 @@ a {
   .artwork {
     height: 78px;
     width: 78px;
+  }
+
+  .waxlive-logo--media {
+    max-width: 78px;
   }
 
   .player-header {

@@ -147,6 +147,11 @@ a {
   gap: 12px;
 }
 
+.waxlive-logo-link {
+  display: block;
+  width: fit-content;
+}
+
 .waxlive-logo {
   display: block;
   height: auto;
@@ -154,7 +159,8 @@ a {
   transition: opacity 200ms ease;
 }
 
-.player-card:hover .waxlive-logo {
+.player-card:hover .waxlive-logo,
+.waxlive-logo-link:hover .waxlive-logo {
   opacity: 0.7;
 }
 

@@ -218,11 +218,19 @@ export default function EmbeddedPlayer({
           alt={`${stationTitle} artwork`}
           loading="eager"
         />
-        <img
-          className="waxlive-logo waxlive-logo--media"
-          src={WAXLIVE_LOGO_URL}
-          alt=""
-        />
+        <a
+          className="waxlive-logo-link"
+          href="https://wax.live"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Visit wax.live"
+        >
+          <img
+            className="waxlive-logo waxlive-logo--media"
+            src={WAXLIVE_LOGO_URL}
+            alt="WaxLive"
+          />
+        </a>
       </div>
 
       <div className="player-content">

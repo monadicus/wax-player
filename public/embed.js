@@ -94,6 +94,7 @@
       '.wax-player *{box-sizing:border-box;}' +
       '.media{display:grid;gap:10px;align-content:start;}' +
       '.art{width:72px;height:72px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 10px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);background:#1c1917;}' +
+      '.brand-link{display:block;width:fit-content;}' +
       '.brand-mark{display:block;height:auto;}' +
       '.brand-mark--media{width:72px;}' +
       '.content{display:grid;gap:12px;min-width:0;}' +
@@ -125,7 +126,7 @@
       '<section class="wax-player" aria-live="polite">' +
       '<div class="media">' +
       '<img class="art" alt="Station artwork">' +
-      '<img class="brand-mark brand-mark--media" alt="">' +
+      '<a class="brand-link" href="https://wax.live" target="_blank" rel="noreferrer" aria-label="Visit wax.live"><img class="brand-mark brand-mark--media" alt="WaxLive"></a>' +
       "</div>" +
       '<div class="content">' +
       '<div class="header">' +
